@@ -31,6 +31,33 @@ arr_test = [-12, 34, 2,331, 7633,235,587,55]
 print("Minimum: ", minimum(arr_test)) 
 print("Maximum: ", maximum(arr_test)) 
 
+# Быстрая сортировка
+def quicksort(arr):
+    if len(arr) < 2:
+        # базовый случай, массив с 0 или 1 элементом уже отсортирован
+        return arr
+    else:
+        # рекурсивный случай. выберем опорный элемент pivot
+        pivot = arr[0]
+        # подмассив всех элементов, меньших, чем опорный элемент pivot
+        less = [i for i in arr[1:] if i <= pivot]
+        # подмассив всех элементов, превышающих опорный элемент pivot
+        greater = [i for i in arr[1:] if i > pivot]
+        # обединяем в порядке "сортировка для меньшего подмассива – опорный элемент – сортировка для большего подмассив"
+        return quicksort(less) + [pivot] + quicksort(greater)
+
+# Максимум - это последний элемент отсортированного списка
+def maximum(arr):
+    return quicksort(arr)[-1]
+
+ # Минимум - это первый элемент отсортированного списка
+def minimum(arr):
+    return quicksort(arr)[0]
+print('\nБыстрая сортировка')
+print('min =', minimum([4,6,2,1,9,63,-134,566]))
+print('max =', maximum([4,6,2,1,9,63,-134,566]))
+
+
 # Задача 2.2. 
 
 # Напишите функцию, которая возвращает номер квартал по номеру месяца
@@ -54,6 +81,11 @@ mes=4
 mes_names = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь']
 print('месяц ',mes, '(',mes_names[mes-1], ')',quarter_of(mes))
 
+# покороче
+def quarter_of(month):
+    q = {1: (1,3), 2:(4,6), 3:(7,9), 4:(10,12)}
+    return [k for k,v in q.items() if v[0] <= month <= v[1]][0]
+
 
 # Задача 2.3.
 
@@ -73,6 +105,10 @@ def switch_it_up(number):
 		
 print (switch_it_up(1))
 
+# через словари
+def switch_it_up(number):
+    return {0: 'Zero', 1: 'One', 2: 'Two', 3: 'Three', 4: 'Four', 5: 'Five',
+            6: 'Six', 7: 'Seven', 8: 'Eight', 9: 'Nine'}.get(number)
 
 # Задача 2.4.
 
@@ -127,3 +163,8 @@ def remove_word_with_one_em(s):
 
 print (remove_word_with_one_em('QQ!! W! RR'))
 
+# однострочник
+def remove_word_with_one_em(s):
+    return ' '.join([w for w in s.split(' ') if w.count('!')!=1])
+
+print(remove_word_with_one_em("Hi! Hi!! Hi!"))
